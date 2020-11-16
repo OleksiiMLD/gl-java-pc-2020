@@ -72,7 +72,7 @@ class HashSetTest {
 
 		@Test
 		void removeElementReturnsFalse() {
-			set.remove(i1);
+			assertFalse(set.remove(i1), "No elements in Set - nothing to remove.");
 		}
 
 		@Test
@@ -298,19 +298,19 @@ class HashSetTest {
 		@Test
 		void whenAddAllGetUnion() {
 			assertTrue(setA.addAll(setB));
-			assertEquals(setA, setUnion, "Union must contain all elements.");
+			assertEquals(setUnion, setA, "Union must contain all elements.");
 		}
 
 		@Test
 		void whenRetainAllGetIntersection() {
 			assertTrue(setA.retainAll(setB));
-			assertEquals(setA, setIntersection, "Intersection must contain only common elements.");
+			assertEquals(setIntersection, setA, "Intersection must contain only common elements.");
 		}
 
 		@Test
 		void whenRemoveAllGetSubtraction() {
 			assertTrue(setA.removeAll(setB));
-			assertEquals(setA, setSubtraction, "Subtraction must contain only different elements.");
+			assertEquals(setSubtraction, setA, "Subtraction must contain only different elements.");
 		}
 	}
 }
