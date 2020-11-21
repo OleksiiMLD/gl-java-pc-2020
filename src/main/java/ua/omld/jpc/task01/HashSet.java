@@ -4,12 +4,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * This class is a simple implementation of the <tt>Set</tt> interface,
  * backed by a hash table. It makes no guarantees as to the iteration order
- * of the set. This class does not permit the <tt>null</tt> element.
+ * of the set. This class permits the <tt>null</tt> element.
  *
  * <p><strong>This implementation is not tread-safe.</strong>
  *
@@ -85,15 +86,14 @@ public class HashSet<E> implements Set<E> {
 	 *
 	 * @param o element whose presence in this set is to be tested
 	 * @return <tt>true</tt> if this set contains the specified element
-	 * @throws NullPointerException if the specified element is null
 	 */
 	@Override
 	public boolean contains(Object o) {
-		int index = hashFunction(o.hashCode());
+		int index = hashFunction(Objects.hashCode(o));
 		Entry<E> current = buckets[index];
 
 		while (current != null) {
-			if (current.value.equals(o)) {
+			if (Objects.equals(current.value, o)) {
 				return true;
 			}
 			current = current.next;
@@ -184,15 +184,14 @@ public class HashSet<E> implements Set<E> {
 	 * @param e element to be added to this set
 	 * @return <tt>true</tt> if this set did not already contain the specified
 	 * element
-	 * @throws NullPointerException if the specified element is null
 	 */
 	@Override
 	public boolean add(E e) {
-		int index = hashFunction(e.hashCode());
+		int index = hashFunction(Objects.hashCode(e));
 		Entry<E> current = buckets[index];
 
 		while (current != null) {
-			if (current.value.equals(e)) {
+			if (Objects.equals(current.value, e)) {
 				return false;
 			}
 			current = current.next;
@@ -211,16 +210,15 @@ public class HashSet<E> implements Set<E> {
 	 *
 	 * @param o object to be removed from this set, if present
 	 * @return <tt>true</tt> if this set contained the specified element
-	 * @throws NullPointerException if the specified element is null
 	 */
 	@Override
 	public boolean remove(Object o) {
-		int index = hashFunction(o.hashCode());
+		int index = hashFunction(Objects.hashCode(o));
 		Entry<E> current = buckets[index];
 		Entry<E> previous = null;
 
 		while (current != null) {
-			if (current.value.equals(o)) {
+			if (Objects.equals(current.value, o)) {
 				if (previous == null) {
 					buckets[index] = current.next;
 				} else {
@@ -244,8 +242,7 @@ public class HashSet<E> implements Set<E> {
 	 * @param c collection to be checked for containment in this set
 	 * @return <tt>true</tt> if this set contains all of the elements of the
 	 * specified collection
-	 * @throws NullPointerException if the specified collection contains one
-	 *                              or more null elements
+	 * @throws NullPointerException if the specified collection is null
 	 * @see #contains(Object)
 	 */
 	@Override
@@ -268,8 +265,7 @@ public class HashSet<E> implements Set<E> {
 	 *
 	 * @param c collection containing elements to be added to this set
 	 * @return <tt>true</tt> if this set changed as a result of the call
-	 * @throws NullPointerException if the specified collection contains one
-	 *                              or more null elements or if the specified collection is null
+	 * @throws NullPointerException if the specified collection is null
 	 * @see #add(Object)
 	 */
 	@Override
@@ -291,8 +287,7 @@ public class HashSet<E> implements Set<E> {
 	 *
 	 * @param c collection containing elements to be retained in this set
 	 * @return <tt>true</tt> if this set changed as a result of the call
-	 * @throws NullPointerException if this set contains a null element,
-	 *                              or if the specified collection is null
+	 * @throws NullPointerException if the specified collection is null
 	 * @see #remove(Object)
 	 */
 	@Override
@@ -316,8 +311,7 @@ public class HashSet<E> implements Set<E> {
 	 *
 	 * @param c collection containing elements to be removed from this set
 	 * @return <tt>true</tt> if this set changed as a result of the call
-	 * @throws NullPointerException if this set contains a null element,
-	 *                              or if the specified collection is null
+	 * @throws NullPointerException if the specified collection is null
 	 * @see #remove(Object)
 	 * @see #contains(Object)
 	 */
