@@ -61,13 +61,14 @@ class HashSetTest {
 		}
 
 		@Test
-		void addNullThrowsNullPointerException() {
-			assertThrows(NullPointerException.class, new Executable() {
-				@Override
-				public void execute() throws Throwable {
-					set.add(null);
-				}
-			}, "Nulls are not permitted.");
+		void addNullReturnsTrue() {
+			assertTrue(set.add(null), "Null must be added.");
+		}
+
+		@Test
+		void addNullTwiceReturnsFalse() {
+			set.add(null);
+			assertFalse(set.add(null), "Only one null can be added.");
 		}
 
 		@Test
@@ -76,13 +77,14 @@ class HashSetTest {
 		}
 
 		@Test
-		void removeNullThrowsNullPointerException() {
-			assertThrows(NullPointerException.class, new Executable() {
-				@Override
-				public void execute() throws Throwable {
-					set.remove(null);
-				}
-			}, "Nulls are not permitted.");
+		void removeNullReturnsFalse() {
+			assertFalse(set.remove(null), "Nulls are permitted, but there are no elements in the set.");
+		}
+
+		@Test
+		void afterAddNullRemoveNullReturnsTrue() {
+			set.add(null);
+			assertTrue(set.remove(null), "Null must be removed.");
 		}
 
 		@Test
@@ -108,13 +110,8 @@ class HashSetTest {
 		}
 
 		@Test
-		void addAllWithNullThrowsNullPointerException() {
-			assertThrows(NullPointerException.class, new Executable() {
-				@Override
-				public void execute() throws Throwable {
-					set.addAll(Arrays.asList(i1, null));
-				}
-			}, "Nulls are not permitted.");
+		void addAllWithNullReturnsTrue() {
+			assertTrue(set.addAll(Arrays.asList(i1, null)), "Collection with null must be added.");
 		}
 
 		@Test
@@ -123,13 +120,8 @@ class HashSetTest {
 		}
 
 		@Test
-		void removeAllWithNullThrowsNullPointerException() {
-			assertThrows(NullPointerException.class, new Executable() {
-				@Override
-				public void execute() throws Throwable {
-					set.removeAll(Arrays.asList(i1, null));
-				}
-			}, "Nulls are not permitted.");
+		void removeAllWithNullReturnsFalse() {
+			assertFalse(set.removeAll(Arrays.asList(i1, null)), "Collection with null must be removed.");
 		}
 	}
 
@@ -272,13 +264,14 @@ class HashSetTest {
 		}
 
 		@Test
-		void withNullElementContainsAllThrowsNullPointerException() {
-			assertThrows(NullPointerException.class, new Executable() {
-				@Override
-				public void execute() throws Throwable {
-					set.containsAll(Arrays.asList(i2, null, i4));
-				}
-			}, "Nulls are not permitted.");
+		void containsAllWithNullElementReturnsFalse() {
+			assertFalse(set.containsAll(Arrays.asList(i2, null, i4)), "Nulls are permitted, but there is not in the set.");
+		}
+
+		@Test
+		void andAddNullContainsAllWithNullElementReturnsTrue() {
+			set.add(null);
+			assertTrue(set.containsAll(Arrays.asList(i2, null, i4)), "All elements must be in the Set.");
 		}
 	}
 
